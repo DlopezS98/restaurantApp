@@ -4,6 +4,8 @@ import * as React from 'react';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
+import OfertsScreen from '../screens/Ofertas';
+import ProfileScreen from '../screens/Perfil';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -15,21 +17,34 @@ export default function BottomTabNavigator({ navigation, route }) {
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
 
   return (
-    <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
+    <BottomTab.Navigator tabBarOptions={{
+      style:{
+        backgroundColor: '#eee',
+      },
+      activeTintColor:'#F2A365',
+    }} initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          title: 'Inicio',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-home" />,
+          title: 'Tienda',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="isv" />,
         }}
       />
       <BottomTab.Screen
-        name="Links"
-        component={LinksScreen}
+        name="Oferts"
+        component={OfertsScreen}
         options={{
-          title: 'Resources',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          title: 'Ofertas',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="tags" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          title: 'Perfil',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="profile" />,
         }}
       />
     </BottomTab.Navigator>
@@ -42,7 +57,9 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case 'Home':
       return 'MENU';
-    case 'Links':
-      return 'Links to learn more';
+    case 'Oferts':
+      return 'OFERTAS';
+    case 'Profile':
+      return 'PERFIL'
   }
 }
