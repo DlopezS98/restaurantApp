@@ -3,9 +3,9 @@ import * as React from 'react';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
 import OfertsScreen from '../screens/Ofertas';
 import ProfileScreen from '../screens/Perfil';
+import OrderScreen from '../screens/Ordenes';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -14,14 +14,14 @@ export default function BottomTabNavigator({ navigation, route }) {
   // Set the header title on the parent stack navigator depending on the
   // currently active tab. Learn more in the documentation:
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
-  navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+  navigation.setOptions({ headerTitle: getHeaderTitle(route), headerStyle:{backgroundColor:'#fff'}, headerTintColor:'#282828' });
 
   return (
     <BottomTab.Navigator tabBarOptions={{
       style:{
         backgroundColor: '#eee',
       },
-      activeTintColor:'#F2A365',
+      activeTintColor:'#30475E',
     }} initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
         name="Home"
@@ -37,6 +37,14 @@ export default function BottomTabNavigator({ navigation, route }) {
         options={{
           title: 'Ofertas',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="tags" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Order"
+        component={OrderScreen}
+        options={{
+          title: 'Orden',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="shoppingcart" />,
         }}
       />
       <BottomTab.Screen
@@ -61,5 +69,7 @@ function getHeaderTitle(route) {
       return 'OFERTAS';
     case 'Profile':
       return 'PERFIL'
+    case 'Order':
+      return 'MIS ORDENES'
   }
 }
