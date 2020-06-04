@@ -5,54 +5,63 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  StatusBar,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
-import Constant from 'expo-constants';
+import Constant from "expo-constants";
 
-function _login(navigation) {
-  navigation.navigate("Login");
-}
-
-function _registrer(navigation) {
-  navigation.navigate("Registrer");
-}
-
-function Main({ navigation }) {
-  return (
-    // <View style={styles.container}>
-    <ImageBackground
-      source={require("../assets/images/Inicio.jpg")}
-      style={styles.image}
-    >
-      <View style={styles.container}>
-        <View style={{ flex: 1 }}></View>
-        <View style={{ flex: 1 }}>
-          <View style={styles.body}>
-            <Text style={styles.title}>Bienvenido</Text>
-            <View style={styles.groupButton}>
-              <View style={{marginBottom:15,}}>
+export default class Main extends React.Component {
+  render() {
+    return (
+      // <View style={styles.container}>
+      <ImageBackground
+        source={require("../assets/images/Inicio.jpg")}
+        style={styles.image}
+      >
+        <StatusBar barStyle="light-content" backgroundColor="#FF926B" />
+        <View style={styles.container}>
+          <View style={{ flex: 1 }}></View>
+          <View style={{ flex: 1 }}>
+            <View style={styles.body}>
+              <Text style={styles.title}>Bienvenido</Text>
+              <View style={styles.groupButton}>
+                <View style={{ marginBottom: 15 }}>
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate("Login")}
+                  >
+                    <LinearGradient
+                      start={[0.2, 0.8]}
+                      end={{ x: 1, y: 0 }}
+                      colors={["#FF926B", "#222831"]}
+                      style={styles.touchableButton}
+                    >
+                    <Text style={{ color: "#fff" }}>Iniciar sesión</Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
+                <View style={{ marginBottom: 10 }}>
                 <TouchableOpacity
-                  style={styles.touchableButton}
-                  onPress={() => _login(navigation)}
-                >
-                  <Text style={{ color: "#fff" }}>Iniciar sesión</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={{marginBottom:10}}>
-                <TouchableOpacity
-                  style={styles.touchableButton}
-                  onPress={() => _registrer(navigation)}
-                >
-                  <Text style={{ color: "#fff" }}>Registrarse</Text>
-                </TouchableOpacity>
+                    onPress={() => this.props.navigation.navigate("Registrer")}
+                  >
+                    <LinearGradient
+                      start={[0.2, 0.8]}
+                      end={{ x: 1, y: 0 }}
+                      colors={["#FF926B", "#222831"]}
+                      style={styles.touchableButton}
+                    >
+                    <Text style={{ color: "#fff" }}>Registrarse</Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
         </View>
-      </View>
-    </ImageBackground>
-    // </View>
-  );
+      </ImageBackground>
+      // </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -62,7 +71,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     resizeMode: "cover",
-    marginTop: Constant.statusBarHeight,
+    // marginTop: Constant.statusBarHeight,
   },
   body: {
     flex: 1,
@@ -74,7 +83,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   groupButton: {
-    margin:20,
+    margin: 20,
   },
   touchableButton: {
     height: 40,
@@ -87,5 +96,3 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
 });
-
-export default Main;
