@@ -13,7 +13,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export default function ProfileScreen() {
   return (
-    <ScrollView style={{ backgroundColor: "#fff" }}>
+    <ScrollView style={{ backgroundColor: "#fff" }} showsVerticalScrollIndicator={false} >
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.sectionEdit}>
@@ -40,7 +40,7 @@ export default function ProfileScreen() {
                 <Text style={{color:'#fff'}}>Dirección</Text>
                 <TextInput style={styles.input} value="San Marcos - Carazo" editable={false} />
                 <Text style={{color:'#fff'}}>Teléfono</Text>
-                <TextInput style={styles.input} value="8874 4533"  />
+                <TextInput style={styles.input} value="8874 4533" editable={false}  />
             </View>
         </View>
       </View>
@@ -52,14 +52,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 12,
-    padding:12,
+    padding:24,
     flexDirection: "column",
-    elevation:2,
     borderRadius:10,
+    backgroundColor:'#fff',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 10,
   },
   header: {
     flexDirection: "column",
     marginBottom: 20,
+    borderRadius:5,
   },
   sectionEdit: {
     flexDirection:'row',
@@ -91,6 +100,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor:'#282828',
     borderRadius:10,
+    marginBottom:20,
   },
   form:{
       marginHorizontal:12,

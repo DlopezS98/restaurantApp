@@ -12,18 +12,6 @@ import {
 
 import Constant from "expo-constants";
 
-/* function _Index(navigation) {
-  navigation.navigate("Index");
-}
-
-function _registrer(navigation) {
-  navigation.navigate("Main");
-}
-
-function _login(navigation) {
-  navigation.navigate("Login");
-} */
-
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -40,8 +28,6 @@ export default class Login extends React.Component {
   };
 
   render() {
-    /* const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled((previousState) => !previousState); */
     return (
       <View style={{ flex: 1 }}>
         <ScrollView style={{ backgroundColor: "#fff" }}>

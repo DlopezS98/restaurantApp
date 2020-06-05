@@ -1,11 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import * as React from 'react';
+import React, {useState} from 'react';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import OfertsScreen from '../screens/Ofertas';
 import ProfileScreen from '../screens/Perfil';
 import OrderScreen from '../screens/Ordenes';
+import Colors from '../constants/Colors';
+import ModalScreen from '../screens/Modal';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -22,13 +24,15 @@ export default function BottomTabNavigator({ navigation, route }) {
         backgroundColor: '#eee',
       },
       activeTintColor:'#30475E',
+      keyboardHidesTabBar:true,
+
     }} initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
         options={{
           title: 'Tienda',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="isv" />,
+        tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="isv" />,
         }}
       />
       <BottomTab.Screen
