@@ -8,96 +8,103 @@ import {
   TouchableOpacity,
   Switch,
   ScrollView,
-  Alert
+  Alert,
 } from "react-native";
 import Constant from "expo-constants";
 
-function _Index(navigation) {
-  navigation.navigate("Index");
-}
+export default class Registrer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isEnable: false,
+      showPassword: true,
+    };
+  }
 
-function _main(navigation) {
-  Alert.alert('INICIE SESIÓN PARA CONTINUAR!')
-  navigation.navigate("Main");
-}
+  _onSwitch = () => {
+    this.state.isEnable
+      ? this.setState({ isEnable: false, showPassword: true })
+      : this.setState({ isEnable: true, showPassword: false });
+  };
 
-function _registrer(navigation) {
-  navigation.navigate("Registrer");
-}
-
-function Registrer({ navigation }) {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-
-  return (
-    <View style={{ flex: 1, marginTop: Constant.statusBarHeight }}>
-      <ScrollView style={{ backgroundColor: "#fff" }}>
-        <View style={styles.container}>
-          <ImageBackground
-            style={{ height: 200, resizeMode: "cover" }}
-            source={require("../assets/images/Banner.jpg")}
-          >
-            <View style={styles.header}>
-              <View style={styles.title}>
-                <Text style={{ color: "#fff", fontWeight: "bold" }}>
-                  CREAR CUENTA
-                </Text>
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+        <ScrollView style={{ backgroundColor: "#fff" }}>
+          <View style={styles.container}>
+            <ImageBackground
+              style={{ height: 200, resizeMode: "cover" }}
+              source={require("../assets/images/Banner.jpg")}
+            >
+              <View style={styles.header}>
+                <View style={styles.title}>
+                  <Text style={{ color: "#fff", fontWeight: "bold" }}>
+                    CREAR CUENTA
+                  </Text>
+                </View>
               </View>
-            </View>
-          </ImageBackground>
-          <View style={styles.body}>
-            <View style={styles.form}>
-              <View style={styles.formGroup}>
-                <TextInput style={styles.textInput} placeholder="Nombres" />
-              </View>
-              <View style={styles.formGroup}>
-                <TextInput style={styles.textInput} placeholder="Apellidos" />
-              </View>
-              <View style={styles.formGroup}>
-                <TextInput style={styles.textInput} placeholder="Correo" />
-              </View>
-              <View style={styles.formGroup}>
-                <TextInput style={styles.textInput} placeholder="Dirección" />
-              </View>
-              <View style={styles.formGroup}>
-                <TextInput style={styles.textInput} placeholder="Usuario" />
-              </View>
-              <View style={styles.formGroup}>
-                <TextInput style={styles.textInput} placeholder="Contraseña" />
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  marginHorizontal: 10,
-                  marginBottom: 20,
-                  justifyContent: "space-between",
-                }}
-              >
-                <Text>Mostrar contraseña</Text>
-                <Switch
-                  style={{ marginLeft: 5 }}
-                  trackColor={{ false: "#767577", true: "#30475E" }}
-                  thumbColor={isEnabled ? "#F2A365" : "#f4f3f4"}
-                  ios_backgroundColor="#3e3e3e"
-                  onValueChange={toggleSwitch}
-                  value={isEnabled}
-                />
-              </View>
-              <View style={styles.formGroup}>
-                <TouchableOpacity
-                  style={styles.touchableButton}
-                  onPress={() => _main(navigation)}
+            </ImageBackground>
+            <View style={styles.body}>
+              <View style={styles.form}>
+                {/* <View style={styles.formGroup}>
+                  <TextInput style={styles.textInput} placeholder="Nombres" />
+                </View>
+                <View style={styles.formGroup}>
+                  <TextInput style={styles.textInput} placeholder="Apellidos" />
+                </View> */}
+                <View style={styles.formGroup}>
+                  <TextInput style={styles.textInput} placeholder="Usuario" />
+                </View>
+                <View style={styles.formGroup}>
+                  <TextInput style={styles.textInput} placeholder="Correo" />
+                </View>
+                {/* <View style={styles.formGroup}>
+                  <TextInput style={styles.textInput} placeholder="Dirección" />
+                </View> */}
+                <View style={styles.formGroup}>
+                  <TextInput
+                    style={styles.textInput}
+                    placeholder="Contraseña"
+                    secureTextEntry={this.state.showPassword}
+                    autoCapitalize="none"
+                  />
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginHorizontal: 10,
+                    marginBottom: 20,
+                    justifyContent: "space-between",
+                  }}
                 >
-                  <Text style={{ color: "#fff" }}>Registrarse</Text>
-                </TouchableOpacity>
+                  <Text>Mostrar contraseña</Text>
+                  <Switch
+                    style={{ marginLeft: 5 }}
+                    trackColor={{ false: "#767577", true: "#30475E" }}
+                    thumbColor={this.state.isEnable ? "#F2A365" : "#f4f3f4"}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={this._onSwitch}
+                    value={this.state.isEnable}
+                  />
+                </View>
+                <View style={styles.formGroup}>
+                  <TouchableOpacity
+                    style={styles.touchableButton}
+                    onPress={() => {
+                      Alert.alert('Iniciar sesion antes de comenzar');
+                      this.props.navigation.navigate('Main');
+                    }}
+                  >
+                    <Text style={{ color: "#fff" }}>Registrarse</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-    </View>
-  );
+        </ScrollView>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -136,6 +143,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   textInput: {
+    fontSize:16,
     padding: 10,
     borderRadius: 5,
     borderColor: "#ccc",
@@ -153,5 +161,3 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
 });
-
-export default Registrer;
