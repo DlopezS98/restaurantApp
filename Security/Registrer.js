@@ -11,6 +11,7 @@ import {
   Alert,
 } from "react-native";
 import Constant from "expo-constants";
+import * as firebase from 'firebase';
 
 export default class Registrer extends React.Component {
   constructor(props) {
@@ -18,8 +19,25 @@ export default class Registrer extends React.Component {
     this.state = {
       isEnable: false,
       showPassword: true,
+      name: "",
+      email: "",
+      password: "",
+      errorMessage: "",
     };
   }
+
+  handleSignUp = () => {
+    const { email, password } = this.state;
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        return userCredentials.user.updateProfile({
+          displayName: this.state.name,
+        });
+      })
+      .catch((error) => this.setState({ errorMessage: error.message }));
+  };
 
   _onSwitch = () => {
     this.state.isEnable
@@ -46,26 +64,33 @@ export default class Registrer extends React.Component {
             </ImageBackground>
             <View style={styles.body}>
               <View style={styles.form}>
-                {/* <View style={styles.formGroup}>
-                  <TextInput style={styles.textInput} placeholder="Nombres" />
+                <View style={styles.formGroup}>
+                  <TextInput
+                    style={styles.textInput}
+                    onChangeText={(userName) =>
+                      this.setState({ name: userName })
+                    }
+                    value={this.state.name}
+                    placeholder="Usuario"
+                  />
                 </View>
                 <View style={styles.formGroup}>
-                  <TextInput style={styles.textInput} placeholder="Apellidos" />
-                </View> */}
-                <View style={styles.formGroup}>
-                  <TextInput style={styles.textInput} placeholder="Usuario" />
+                  <TextInput
+                    style={styles.textInput}
+                    onChangeText={(email) => this.setState({ email: email })}
+                    value={this.state.email}
+                    placeholder="Correo"
+                  />
                 </View>
-                <View style={styles.formGroup}>
-                  <TextInput style={styles.textInput} placeholder="Correo" />
-                </View>
-                {/* <View style={styles.formGroup}>
-                  <TextInput style={styles.textInput} placeholder="Dirección" />
-                </View> */}
                 <View style={styles.formGroup}>
                   <TextInput
                     style={styles.textInput}
                     placeholder="Contraseña"
                     secureTextEntry={this.state.showPassword}
+                    onChangeText={(password) =>
+                      this.setState({ password: password })
+                    }
+                    value={this.state.password}
                     autoCapitalize="none"
                   />
                 </View>
@@ -90,13 +115,13 @@ export default class Registrer extends React.Component {
                 <View style={styles.formGroup}>
                   <TouchableOpacity
                     style={styles.touchableButton}
-                    onPress={() => {
-                      Alert.alert('Iniciar sesion antes de comenzar');
-                      this.props.navigation.navigate('Main');
-                    }}
+                    onPress={this.handleSignUp}
                   >
                     <Text style={{ color: "#fff" }}>Registrarse</Text>
                   </TouchableOpacity>
+                </View>
+                <View>
+                  <Text>{this.state.errorMessage}</Text>
                 </View>
               </View>
             </View>
@@ -143,7 +168,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   textInput: {
-    fontSize:16,
+    fontSize: 16,
     padding: 10,
     borderRadius: 5,
     borderColor: "#ccc",

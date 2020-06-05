@@ -9,7 +9,7 @@ import {
   ScrollView,
   ImageBackground,
 } from "react-native";
-
+import * as firebase from "firebase";
 import Constant from "expo-constants";
 
 export default class Login extends React.Component {
@@ -18,8 +18,25 @@ export default class Login extends React.Component {
     this.state = {
       isEnabled: false,
       showPassword: true,
+      email: "",
+      password: "",
+      errorMessage: "",
     };
   }
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      this.props.navigation.navigate(user ? "Index" : "Login");
+    });
+  }
+
+  handleLogin = () => {
+    const {email, password} = this.state;
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch((error) => this.setState({ errorMessage: error.message }));
+  };
 
   _onSwitch = () => {
     this.state.isEnabled
@@ -48,6 +65,9 @@ export default class Login extends React.Component {
               <View style={styles.form}>
                 <View style={styles.formGroup}>
                   <TextInput
+                    autoCapitalize="none"
+                    onChangeText={(email) => this.setState({ email: email })}
+                    value={this.state.email}
                     style={styles.textInput}
                     placeholder="Correo Electronico"
                   />
@@ -58,6 +78,10 @@ export default class Login extends React.Component {
                     secureTextEntry={this.state.showPassword}
                     autoCapitalize="none"
                     placeholder="Contraseña"
+                    onChangeText={(password) =>
+                      this.setState({ password: password })
+                    }
+                    value={this.state.password}
                   />
                 </View>
                 <View
@@ -81,7 +105,7 @@ export default class Login extends React.Component {
                 <View style={styles.formGroup}>
                   <TouchableOpacity
                     style={styles.touchableButton}
-                    onPress={() => this.props.navigation.navigate("Index")}
+                    onPress={this.handleLogin}
                   >
                     <Text style={{ color: "#fff" }}>Iniciar</Text>
                   </TouchableOpacity>
@@ -98,6 +122,9 @@ export default class Login extends React.Component {
                       Olvidé mi contraseña
                     </Text>
                   </TouchableOpacity>
+                </View>
+                <View> 
+                  <Text>{this.state.errorMessage}</Text>
                 </View>
               </View>
             </View>
@@ -144,7 +171,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   textInput: {
-    fontSize:16,
+    fontSize: 16,
     padding: 10,
     borderRadius: 5,
     borderColor: "#ccc",
