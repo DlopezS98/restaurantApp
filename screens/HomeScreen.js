@@ -14,8 +14,9 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
-import ModalScreen from "../screens/Modal";
 
+//DATOS ESTATICOS PARA MOSTRAR EN CATEGORIAS...
+//DATOS -> "MAS POPULAR"
 const popularData = [
   {
     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
@@ -40,6 +41,7 @@ const popularData = [
   },
 ];
 
+//DATOS -> "MEJORES PLATILLOS"
 const bestFood = [
   {
     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
@@ -67,6 +69,7 @@ const bestFood = [
   },
 ];
 
+//DATOS DE LAS CATEGORIAS DISPONIBLES
 const categoryData = [
   {
     id: "1dlopes981",
@@ -98,18 +101,22 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showModal: false,
+      showModal: false, //Mostrar modal
+      //Datos auxiliares para el modal...
       title: "",
       image: "",
       price: "",
       description: "",
     };
+    //Declarando las funciones...
     this._ItemCategory = this._ItemCategory.bind(this);
     this._ItemMorePopular = this._ItemMorePopular.bind(this);
     this._ItemBestFood = this._ItemBestFood.bind(this);
     this._ModalScreen = this._ModalScreen.bind(this);
   }
 
+  /*FUNCION QUE RETORNARÁ Y CREARA CADA UNO DE LOS ELEMENTOS 
+  O ITMES DE LAS CATEGORIAS DISPONIBLES*/
   _ItemCategory({ category }) {
     return (
       <View>
@@ -127,11 +134,13 @@ export default class HomeScreen extends React.Component {
     );
   }
 
+  //ELEMENTOS DE LA SECCIÓN "MAS POPULAR"
   _ItemMorePopular({ image, price, title, desc }) {
     return (
       <TouchableOpacity
         style={styles.item}
         onPress={() =>
+          //ACTUALIZANDO EL ESTADO CON LOS DATOS Y MOSTRANDO EL MODAL...
           this.setState({
             title: title,
             image: image,
@@ -146,10 +155,12 @@ export default class HomeScreen extends React.Component {
     );
   }
 
+  //ELEMENTOS DE LA SECCIÓN "MEJORES PLATILLOS"
   _ItemBestFood({ image, price, desc, title }) {
     return (
       <TouchableOpacity
         onPress={() =>
+          //ACTUALIZANDO EL ESTADO CON LOS DATOS Y MOSTRANDO EL MODAL...
           this.setState({
             title: title,
             image: image,
@@ -165,12 +176,13 @@ export default class HomeScreen extends React.Component {
     );
   }
 
+  //CREANDO EL MODAL Y SUS PARAMENTROS...
   _ModalScreen({ img, desc, price, title }) {
     return (
       <Modal
         animationType="slide"
         transparent={true}
-        visible={this.state.showModal}
+        visible={this.state.showModal} //VALOR DEL ESTADO
         onRequestClose={() => {
           Alert.alert("Modal has been closed.");
         }}
@@ -255,6 +267,7 @@ export default class HomeScreen extends React.Component {
         style={{ backgroundColor: "#fff" }}
         showsVerticalScrollIndicator={false}
       >
+        {/* RENDERIZANDO EL MODAL EN LA PANTALLA Y PASANDO LOS PARAMENTROS DEL ESTADO... */}
         <this._ModalScreen
           img={this.state.image}
           desc={this.state.description}
@@ -262,9 +275,12 @@ export default class HomeScreen extends React.Component {
           title={this.state.title}
         />
 
+      {/* CONTENEDOR LOS ELEMENTOS */}
         <View style={styles.container}>
           <View style={styles.header}>
+            {/* INPUT DE BUSQUEDA */}
             <TextInput placeholder="Buscar" style={styles.textInput} />
+            {/* BANNER PRINCIPAL */}
             <LinearGradient
               start={[1, 0.3]}
               end={{ x: 0, y: 1 }}
@@ -292,6 +308,7 @@ export default class HomeScreen extends React.Component {
           </View>
 
           <View style={styles.body}>
+            {/* RENDERIZANDO LA SECCION DE LAS CATEGORIAS */}
             <View style={{ paddingHorizontal: 24, marginBottom: 10 }}>
               <Text style={styles.title}>Categorias</Text>
             </View>
@@ -305,6 +322,7 @@ export default class HomeScreen extends React.Component {
               }
               keyExtractor={(item) => item.id}
             />
+            {/* RENDERIZANDO LA SECCION DE "MAS POPULAR" */}
             <View style={{ paddingHorizontal: 24, marginBottom: 10 }}>
               <Text style={styles.title}>Mas popular</Text>
             </View>
@@ -323,6 +341,7 @@ export default class HomeScreen extends React.Component {
               }
               keyExtractor={(item) => item.id}
             />
+            {/* RENDERIZANDO LA SECCION DE "MEJORES PLATILLOS" */}
             <View
               style={{ paddingHorizontal: 24, marginBottom: 10, marginTop: 20 }}
             >
@@ -351,6 +370,7 @@ export default class HomeScreen extends React.Component {
   }
 }
 
+/* Mis estilos */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -386,7 +406,6 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: "#fff",
     width: 200,
-    //marginVertical: 5,
     marginHorizontal: 10,
     borderRadius: 12,
     elevation: 3,
