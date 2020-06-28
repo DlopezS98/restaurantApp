@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import Constant from "expo-constants";
 import * as firebase from 'firebase';
+import ModalScreen from "../screens/Modal";
 
 export default class Registrer extends React.Component {
   constructor(props) {
@@ -36,7 +37,8 @@ export default class Registrer extends React.Component {
           displayName: this.state.name,
         });
       })
-      .catch((error) => this.setState({ errorMessage: error.message }));
+      .catch((error) => Alert.alert(error.message));
+      // this.setState({ errorMessage: error.message })
   };
 
   _onSwitch = () => {
@@ -120,9 +122,9 @@ export default class Registrer extends React.Component {
                     <Text style={{ color: "#fff" }}>Registrarse</Text>
                   </TouchableOpacity>
                 </View>
-                <View>
+                {/* <View>
                   <Text>{this.state.errorMessage}</Text>
-                </View>
+                </View> */}
               </View>
             </View>
           </View>

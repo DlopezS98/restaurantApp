@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ImageBackground,
+  Alert,
 } from "react-native";
 import * as firebase from "firebase";
 import Constant from "expo-constants";
@@ -35,7 +36,8 @@ export default class Login extends React.Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .catch((error) => this.setState({ errorMessage: error.message }));
+      .catch((error) => Alert.alert(error.message));
+      // this.setState({ errorMessage: error.message })
   };
 
   _onSwitch = () => {
@@ -123,9 +125,9 @@ export default class Login extends React.Component {
                     </Text>
                   </TouchableOpacity>
                 </View>
-                <View> 
+                {/* <View> 
                   <Text>{this.state.errorMessage}</Text>
-                </View>
+                </View> */}
               </View>
             </View>
           </View>

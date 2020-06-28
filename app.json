@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "HelloWorld",
+    "name": "MoustacheApp",
     "slug": "restaurantApp",
     "platforms": [
       "ios",
@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "description": "",
+    "githubUrl": "https://github.com/DlopezS98/restaurantApp"
   }
 }

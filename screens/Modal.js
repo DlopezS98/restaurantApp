@@ -13,43 +13,33 @@ export default class ModalScreen extends Component{
   constructor(props){
     super(props);
     this.state={
-      modalVisible:false,
+      modalVisible:true,
     }
   }
   render(){
     return (
-      <View style={styles.centeredView}>
+      // <View style={styles.centeredView}>
         <Modal
           animationType="slide"
           transparent={true}
-          visible={true}
+          visible={this.state.modalVisible}
           onRequestClose={() => {
             Alert.alert("Modal has been closed.");
           }}
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>Hello World!</Text>
-  
+              <Text style={styles.modalText}>{this.props.error}</Text>
               <TouchableHighlight
                 style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-                onPress={() => {false}}
+                onPress={() => {this.setState({modalVisible: false})}}
               >
-                <Text style={styles.textStyle}>Hide Modal</Text>
+                <Text style={styles.textStyle}>Cerrar</Text>
               </TouchableHighlight>
             </View>
           </View>
         </Modal>
-  
-        {/* <TouchableHighlight
-          style={styles.openButton}
-          onPress={() => {
-            this.setState({modalVisible: true});
-          }}
-        >
-          <Text style={styles.textStyle}>Show Modal</Text>
-        </TouchableHighlight> */}
-      </View>
+      // </View>
     );
   }
 };
